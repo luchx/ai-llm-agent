@@ -5,7 +5,7 @@
 
 ## 文件说明
 
-| 文件 | 内容 | 对应 llm-agent |
+| 文件 | 内容 |
 |---|---|---|
 | `01_简单图.py` | 分类路由：根据输入走不同分支 | `app/graph/` |
 | `02_问卷分析图.py` | 真实业务：预处理 → 关键词 → LLM → 合并 | `app/agent/identify_answer/workflow.py` |

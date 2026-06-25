@@ -5,7 +5,7 @@
 
 ## 文件说明
 
-| 文件 | 内容 | 对应 llm-agent |
+| 文件 | 内容 |
 |---|---|---|
 | `01_FastAPI接口.py` | 同步版本的 Web 接口 | `app/api/v1/task.py` |
 | `02_完整平台.py` | 异步任务平台（API + 队列 + Worker） | 整个 llm-agent 的最小复刻 |

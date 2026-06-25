@@ -11,7 +11,6 @@
   你的代码没法解析。但如果 AI 返回 {"is_exist": 1, "category": "房产降价"}，
   你的代码就能直接用了。
 
-【对应 llm-agent】
   question_check_agent.py 里的 prompt 就是让 AI 返回固定的 JSON 格式：
   {"is_exist": 1/2, "confidence": "high/medium/low", "categories_detected": [...]}
 
@@ -41,7 +40,6 @@ client = get_client()
 #   2. JSON 里有哪些字段
 #   3. 每个字段是什么类型、什么取值
 #
-# 对照 llm-agent 的 question_check_agent.py，它的 SYSTEM_PROMPT 就是这么写的。
 SYSTEM_PROMPT = """你是一位专业的问卷分析专家。
 
 你的任务：分析用户的问卷回答，判断是否涉及以下四类问题：
@@ -68,7 +66,7 @@ def analyze_answer(answer_text: str) -> dict:
     返回：
         dict: 包含 is_exist, confidence, categories_detected, reason 的字典
 
-    对照 llm-agent：
+
         这就是 question_check_agent.py 里 process() 方法的核心逻辑
     """
     response = client.chat.completions.create(
@@ -96,7 +94,6 @@ def analyze_answer(answer_text: str) -> dict:
         return result
     except json.JSONDecodeError:
         # 如果 AI 返回的不是合法 JSON（偶尔会发生），给一个兜底结果
-        # 对照 llm-agent：这就是 question_check_agent.py 里的"关键词降级"逻辑
         return {
             "is_exist": 0,
             "confidence": "low",
@@ -106,7 +103,6 @@ def analyze_answer(answer_text: str) -> dict:
 
 
 # ========== 关键词降级方案 ==========
-# 对照 llm-agent：question_check_agent.py 里有完整的关键词降级逻辑
 # 当 LLM 不可用或返回异常时，用关键词匹配做兜底
 # 前端类比：就像接口超时后你用本地缓存兜底
 KEYWORDS = {

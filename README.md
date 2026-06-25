@@ -1,6 +1,6 @@
 # AI Agent 开发学习手册
 
-> 从零到能独立实现一个 Agent 平台，以团队 llm-agent 项目为蓝本。
+> 从零到能独立实现一个 Agent 平台。
 > 适合：前端扎实、Python 入门水平的同学。
 
 ## 学习路线总览
@@ -23,14 +23,14 @@
 
 ## 每个文件夹里有什么
 
-| 文件夹 | 学什么 | 对应 llm-agent 哪个文件 |
-|---|---|---|
-| `01_LLM基础调用/` | 调通大模型 API、结构化输出 | `app/llm/myopenai_client.py` |
-| `02_Agent核心/` | BaseAgent、具体 Agent、工厂模式 | `app/agent/base_agent.py` `factory.py` |
-| `03_工具调用/` | Function Calling、AI 决定调哪个函数 | Agent 的核心能力 |
-| `04_异步任务平台/` | FastAPI + 队列 + Worker 完整链路 | `app/api/` `app/queue/` `app/runtime/` |
-| `05_LangGraph编排/` | 多步流程图、状态流转 | `app/agent/identify_answer/workflow.py` |
-| `06_进阶优化/` | LLM 抽象层、内存回收、Token 追踪 | `app/llm/service.py` `app/runtime/agent_runtime.py` |
+| 文件夹 | 学什么 |
+|---|---|
+| `01_LLM基础调用/` | 调通大模型 API、结构化输出 |
+| `02_Agent核心/` | BaseAgent、具体 Agent、工厂模式 |
+| `03_工具调用/` | Function Calling、AI 决定调哪个函数 |
+| `04_异步任务平台/` | FastAPI + 队列 + Worker 完整链路 |
+| `05_LangGraph编排/` | 多步流程图、状态流转 |
+| `06_进阶优化/` | LLM 抽象层、内存回收、Token 追踪 |
 
 ## 运行前准备（阶段 0）
 
@@ -76,9 +76,8 @@ python 01_LLM基础调用/01_最小调用.py
 
 1. **先跑通，再读代码**。每个文件开头都有"运行方式"。
 2. **看注释里的"前端类比"**。每个核心概念都用了前端知识做类比。
-3. **看注释里的"对照 llm-agent"**。标了对应团队项目的哪个文件。
-4. **跑通后改一改**。改 prompt、改参数、加个新工具——改坏了再修回来。
-5. **每完成一个阶段，在下面打勾**。
+3. **跑通后改一改**。改 prompt、改参数、加个新工具——改坏了再修回来。
+4. **每完成一个阶段，在下面打勾**。
 
 ## 进度自检
 
@@ -90,21 +89,6 @@ python 01_LLM基础调用/01_最小调用.py
 - [ ] 阶段 5：能用 LangGraph 串一个多步流程
 - [ ] 阶段 6：理解运行时回收和 LLM 抽象层的设计
 
-## 和 llm-agent 项目的关系
-
-```
-你学的这个手册                        llm-agent 真实项目
-─────────────────                    ─────────────────
-01_最小调用.py          ──对应──→     app/llm/myopenai_client.py
-02_结构化输出.py        ──对应──→     Agent 里所有 prompt + JSON 解析
-02_Agent核心/           ──对应──→     app/agent/base_agent.py + factory.py
-03_工具调用/            ──对应──→     Agent 的 tool_calls 能力
-04_异步任务平台/        ──对应──→     app/api/ + app/queue/ + app/runtime/
-05_LangGraph编排/       ──对应──→     app/agent/identify_answer/workflow.py
-06_进阶优化/            ──对应──→     app/runtime/agent_runtime.py + app/llm/
-```
-
-学完这 6 个阶段，回头看 llm-agent 的代码，每一行你都会认识。
 
 > Agent 没那么玄，本质就是"调模型 + 解析返回 + 按规则处理"。
 > 你前端天天做的"调接口 + 解析响应 + 渲染页面"，换个皮就是 Agent。

@@ -5,7 +5,7 @@
 
 ## 文件说明
 
-| 文件 | 内容 | 对应 llm-agent |
+| 文件 | 内容 |
 |---|---|---|
 | `01_LLM抽象层.py` | 统一接口调不同模型 + Token 追踪 | `app/llm/service.py` + `tracker.py` |
 | `02_运行时管理.py` | 执行预算 + 进程回收 + 内存裁剪 | `app/runtime/agent_runtime.py` |

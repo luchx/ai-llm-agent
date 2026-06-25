@@ -10,7 +10,6 @@
 
   这就是 llm-agent 的"请求-ID 异步模式"。
 
-【对应 llm-agent 的完整链路】
   app/api/v1/task.py        → 提交接口 + 查询接口
   app/queue/functions.py    → 队列任务函数
   app/queue/worker.py       → Worker 启动
@@ -50,13 +49,12 @@ from pydantic import BaseModel
 
 
 # ================================================================
-# 第 1 层：数据模型（对应 llm-agent/app/models/task.py）
 # ================================================================
 
 class TaskStatus(str, Enum):
     """
     任务状态机：queued → running → success/failed
-    对照 llm-agent：app/models/task.py 里的 TaskStatus
+
     前端类比：就像订单状态 pending → processing → done/error
     """
     QUEUED = "queued"       # 已入队，等待执行
@@ -66,7 +64,7 @@ class TaskStatus(str, Enum):
 
 
 class Task:
-    """任务数据模型 —— 对应 llm-agent/app/models/task.py"""
+    """任务数据模型 ——"""
     def __init__(self, request_id: str, agent_type: str, input_json: dict):
         self.request_id = request_id
         self.agent_type = agent_type
@@ -90,13 +88,12 @@ class Task:
 
 
 # ================================================================
-# 第 2 层：任务数据库（对应 llm-agent/app/services/task_service.py）
 # ================================================================
 # 真实项目用 MySQL + SQLAlchemy，这里用内存字典模拟。
 # 前端类比：就像一个全局 store / Redux
 
 class TaskStore:
-    """任务存储 —— 对应 llm-agent 的 TaskService + MySQL"""
+    """任务存储 ——"""
 
     def __init__(self):
         self._tasks: Dict[str, Task] = {}
@@ -123,7 +120,6 @@ class TaskStore:
 
 
 # ================================================================
-# 第 3 层：Agent 逻辑（对应 llm-agent/app/agent/）
 # ================================================================
 
 AGENTS = {
@@ -140,7 +136,7 @@ AGENTS = {
 def execute_agent(agent_type: str, input_json: dict) -> dict:
     """
     执行 Agent（模拟版，真实项目会调 LLM）
-    对应 llm-agent：AgentFactory.create(agent_type).process(input_json)
+
     """
     if agent_type == "question_check":
         answer = str(input_json.get("answer", ""))
@@ -163,14 +159,13 @@ def execute_agent(agent_type: str, input_json: dict) -> dict:
 
 
 # ================================================================
-# 第 4 层：异步任务队列（对应 llm-agent/app/queue/）
 # ================================================================
 # 真实项目用 ARQ + Redis，这里用 asyncio.Queue 模拟。
 # 前端类比：就像一个消息队列 / Web Worker
 
 class TaskQueue:
     """
-    异步任务队列 —— 对应 llm-agent 的 ARQ 队列
+    异步任务队列 ——
 
     核心流程：
     1. submit() 把任务放入队列
@@ -191,7 +186,7 @@ class TaskQueue:
     async def worker(self):
         """
         Worker：不断从队列取任务并执行。
-        对照 llm-agent：app/queue/worker.py + app/queue/functions.py
+
 
         这就是后台"工人"的工作循环：
         while True:
@@ -246,14 +241,13 @@ class TaskQueue:
 
 
 # ================================================================
-# 第 5 层：FastAPI 接口（对应 llm-agent/app/api/v1/task.py）
 # ================================================================
 
 # 全局实例
 store = TaskStore()
 queue = TaskQueue(store)
 
-# Pydantic 模型（对应 llm-agent/app/schemas/task.py）
+# Pydantic 模型（
 class TaskSubmitRequest(BaseModel):
     agent_type: str
     input_json: Dict[str, Any]
@@ -285,7 +279,7 @@ app = FastAPI(
 @app.post("/v1/task/submit", response_model=TaskResponse)
 async def submit_task(request: TaskSubmitRequest):
     """
-    提交任务 —— 对应 llm-agent 的 POST /v1/task/submit
+    提交任务 ——
 
     关键设计：立即返回 request_id，不等结果。
     前端类比：点击提交 → 拿到订单号 → 显示 loading → 轮询查状态
@@ -313,7 +307,7 @@ async def submit_task(request: TaskSubmitRequest):
 @app.get("/v1/task/{request_id}", response_model=TaskResponse)
 async def get_task(request_id: str):
     """
-    查询任务状态 —— 对应 llm-agent 的 GET /v1/task/{request_id}
+    查询任务状态 ——
 
     客户端拿 request_id 轮询这个接口，直到 status 变成 success/failed。
     前端类比：setInterval(() => fetch(`/task/${id}`), 2000)

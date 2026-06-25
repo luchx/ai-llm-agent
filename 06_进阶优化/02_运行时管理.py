@@ -10,7 +10,6 @@
 
   这个文件用最简化的代码展示解决方案。
 
-【对应 llm-agent】
   app/runtime/agent_runtime.py  ← 完整的运行时实现
 
   三大机制：
@@ -39,7 +38,6 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 # ========== 第 1 部分：执行预算（Execution Budget） ==========
-# 对照 llm-agent：agent_runtime.py 里的 _acquire_budget / _release_budget
 #
 # 问题：如果同时来 100 个 LLM 任务，每个都占内存和连接，
 #       Worker 会撑不住。
@@ -52,7 +50,7 @@ class ExecutionBudget:
     """
     执行预算：限制同时执行的任务数。
 
-    对照 llm-agent：agent_runtime.py 里的 _acquire_budget / _release_budget
+
     实现原理：asyncio.Semaphore（信号量）
     """
 
@@ -95,7 +93,6 @@ class ExecutionBudget:
 
 
 # ========== 第 2 部分：进程回收（Process Recycle） ==========
-# 对照 llm-agent：agent_runtime.py 里的 _mark_recycle_if_needed
 #
 # 问题：Worker 跑久了内存只涨不降（Python 对象未及时回收、
 #       glibc 的 malloc 不把 free 的内存还给 OS）。
@@ -108,7 +105,7 @@ class RecyclePolicy:
     """
     进程回收策略：决定什么时候该"重启" Worker。
 
-    对照 llm-agent：agent_runtime.py 里的 _mark_recycle_if_needed
+
     """
 
     def __init__(
@@ -125,7 +122,7 @@ class RecyclePolicy:
     def on_task_done(self):
         """
         每个任务完成后调用，检查是否需要回收。
-        对照 llm-agent：agent_runtime.py 里的 _mark_recycle_if_needed
+
         """
         self.processed_tasks += 1
 
@@ -150,7 +147,6 @@ class RecyclePolicy:
 
 
 # ========== 第 3 部分：内存裁剪（Memory Trim） ==========
-# 对照 llm-agent：agent_runtime.py 里的 gc.collect + malloc_trim
 #
 # 问题：Python 的 gc.collect() 只回收 Python 对象，
 #       但 glibc 的 malloc 不会把 free 的内存还给操作系统。
@@ -164,7 +160,7 @@ class RecyclePolicy:
 def memory_trim():
     """
     主动释放内存。
-    对照 llm-agent：agent_runtime.py 里的内存裁剪逻辑
+
     """
     # 第 1 步：Python 垃圾回收
     collected = gc.collect()
@@ -248,7 +244,7 @@ async def main():
     print("   1. 执行预算：信号量限制并发，超时快速失败（防雪崩）")
     print("   2. 进程回收：任务数/内存阈值触发优雅重启（防 OOM）")
     print("   3. 内存裁剪：gc.collect + malloc_trim 主动归还内存")
-    print("   对照 llm-agent/runtime/agent_runtime.py，生产级实现。")
+    print("。")
 
 
 if __name__ == "__main__":

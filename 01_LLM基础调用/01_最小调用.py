@@ -7,7 +7,6 @@
   Agent 的最底层就是：发一段文字(prompt)给大模型，它返回一段文字。
   其他所有花哨的东西——Agent、工具调用、编排——全是在这一行调用上面包的壳。
 
-【对应 llm-agent 的哪个文件】
   app/llm/myopenai_client.py  ← 里面就是封装了这个 OpenAI 客户端
   app/agent/question_check_agent.py  ← process() 方法里的 LLM 调用
 

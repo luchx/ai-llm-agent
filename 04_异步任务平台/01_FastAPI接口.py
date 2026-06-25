@@ -7,7 +7,6 @@
   把之前写的 Agent 变成一个 Web API，让其他系统可以通过 HTTP 调用。
   这就是 llm-agent 的 API 层。
 
-【对应 llm-agent】
   app/api/v1/task.py  ← 任务提交和查询接口
   app/main.py         ← FastAPI 应用入口
   app/schemas/task.py  ← 请求和响应的数据结构
@@ -33,21 +32,20 @@ import time
 # 前端类比：const app = express()
 app = FastAPI(
     title="AI Agent 平台（学习版）",
-    description="最小可运行的 AI Agent 平台，对应 llm-agent 的精简版",
+    description="最小可运行的 AI Agent 平台",
     version="0.1.0",
 )
 
 
 # ========== 第 2 步：定义请求和响应的数据结构 ==========
-# 对照 llm-agent：app/schemas/task.py
 # 前端类比：就像你定义 TypeScript interface
 class TaskSubmitRequest(BaseModel):
-    """任务提交请求 —— 对应 llm-agent 的 TaskSubmitRequest"""
+    """任务提交请求 ——"""
     agent_type: str                    # 要用哪个 Agent，如 "question_check"
     input_json: Dict[str, Any]         # Agent 的输入数据
 
 class TaskResponse(BaseModel):
-    """任务响应 —— 对应 llm-agent 的 TaskResponse"""
+    """任务响应 ——"""
     request_id: str                    # 任务唯一 ID
     status: str                        # 状态：queued / running / success / failed
     output_json: Optional[Dict[str, Any]] = None  # 执行结果（成功时有值）
@@ -61,7 +59,6 @@ task_db: Dict[str, TaskResponse] = {}
 
 
 # ========== 第 4 步：模拟一个最简单的 Agent ==========
-# 对照 llm-agent：app/agent/question_check_agent.py
 # 这里为了不依赖 LLM API，用简单的关键词匹配模拟。
 def run_agent(agent_type: str, input_json: dict) -> dict:
     """模拟执行 Agent（真实项目会调 LLM）"""
@@ -81,12 +78,11 @@ def run_agent(agent_type: str, input_json: dict) -> dict:
 
 
 # ========== 第 5 步：定义 API 接口 ==========
-# 对照 llm-agent：app/api/v1/task.py
 
 @app.post("/v1/task/submit", response_model=TaskResponse, tags=["任务管理"])
 async def submit_task(request: TaskSubmitRequest):
     """
-    提交任务 —— 对应 llm-agent 的 POST /v1/task/submit
+    提交任务 ——
 
     这是同步版本：直接执行 Agent 并返回结果。
     后面的 02_异步任务.py 会改成异步：先返回 ID，后台慢慢执行。
@@ -121,7 +117,7 @@ async def submit_task(request: TaskSubmitRequest):
 @app.get("/v1/task/{request_id}", response_model=TaskResponse, tags=["任务管理"])
 async def get_task(request_id: str):
     """
-    查询任务状态 —— 对应 llm-agent 的 GET /v1/task/{request_id}
+    查询任务状态 ——
 
     前端类比：这就是你写的 GET /api/task/:id 接口。
     """
@@ -133,7 +129,7 @@ async def get_task(request_id: str):
 @app.get("/v1/agents", tags=["系统信息"])
 async def list_agents():
     """
-    列出所有可用的 Agent 类型 —— 对应 llm-agent 的 Agent 列表接口
+    列出所有可用的 Agent 类型 ——
     """
     return {
         "agents": [

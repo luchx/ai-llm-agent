@@ -7,7 +7,6 @@
   所有 Agent 都必须遵循同一个接口：process()、get_required_fields()、get_description()。
   这就是"面向接口编程"——平台不关心你具体怎么实现，只关心你有没有这三个方法。
 
-【对应 llm-agent】
   app/agent/base_agent.py  ← 几乎一模一样
 
 【前端类比】
@@ -33,7 +32,6 @@ from pydantic import BaseModel
 
 
 # ========== 第 1 部分：定义 Agent 的返回结果结构 ==========
-# 对照 llm-agent：app/agent/base_agent.py 里的 AgentResult
 # 前端类比：就像你定义一个接口 { success, data, error, metadata }
 class AgentResult(BaseModel):
     """
@@ -52,7 +50,6 @@ class AgentResult(BaseModel):
 
 
 # ========== 第 2 部分：定义 Agent 的接口（抽象基类） ==========
-# 对照 llm-agent：app/agent/base_agent.py 里的 BaseAgent
 # ABC = Abstract Base Class，表示这个类不能直接实例化，必须被继承
 class BaseAgent(ABC):
     """
@@ -133,7 +130,6 @@ class BaseAgent(ABC):
 
 
 # ========== 第 3 部分：自定义异常类 ==========
-# 对照 llm-agent：base_agent.py 里的 UnsupportedAgentError、ValidationError、ProcessingError
 # 前端类比：就像你自定义的 ApiError、ValidationError 等
 class UnsupportedAgentError(Exception):
     """不支持的 Agent 类型（工厂找不到对应的 Agent）"""

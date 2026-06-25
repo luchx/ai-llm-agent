@@ -10,7 +10,6 @@
   这就是"工厂模式"——调用方不需要知道具体是哪个类，
   只需要告诉工厂一个类型字符串，工厂帮你搞定一切。
 
-【对应 llm-agent】
   app/agent/factory.py  ← 核心逻辑几乎一样
 
 【前端类比】
@@ -36,7 +35,6 @@ from _01_BaseAgent import BaseAgent, AgentResult, UnsupportedAgentError
 
 # ========== 第 1 部分：注册表 ==========
 # 这是一个"类型字符串 → 类路径"的映射表。
-# 对照 llm-agent：factory.py 里的 _BUILTIN_AGENT_PATHS
 #
 # 为什么存字符串路径而不是直接 import？
 # 因为用到哪个才加载哪个（懒加载），不启动时全量 import，
@@ -59,7 +57,7 @@ class AgentFactory:
     2. 三种注册来源：内置映射表、YAML 配置、运行时动态注册
     3. 实例复用：支持缓存 Agent 实例，避免重复创建
 
-    对照 llm-agent：app/agent/factory.py
+
     """
 
     def __init__(self):
@@ -71,7 +69,7 @@ class AgentFactory:
         """
         手动注册一个 Agent 类。
         用于运行时动态注册新 Agent，不需要重启服务。
-        对照 llm-agent：factory.py 的 register_agent 方法
+
         """
         self._registry[agent_type] = agent_class
         print(f"  📝 注册 Agent: {agent_type} → {agent_class.__name__}")
@@ -84,7 +82,7 @@ class AgentFactory:
         class_path 格式："模块路径.类名"
         例如："02_问卷检查Agent.QuestionCheckAgent"
 
-        对照 llm-agent：factory.py 的 _load_agent_class 方法
+
         """
         # 拆分模块路径和类名
         # "02_问卷检查Agent.QuestionCheckAgent" → module="02_问卷检查Agent", class="QuestionCheckAgent"
@@ -115,7 +113,7 @@ class AgentFactory:
         2. 再看内置映射表（BUILTIN_AGENT_PATHS）
         3. 都没有就报错
 
-        对照 llm-agent：factory.py 的 create_agent 方法
+
         """
         # 第 1 步：看缓存里有没有
         if agent_type in self._registry:
@@ -201,4 +199,4 @@ if __name__ == "__main__":
     print("   1. 注册表：字符串 → 类的映射")
     print("   2. 懒加载：用到才 import，省内存")
     print("   3. 统一创建接口：调用方只传类型字符串")
-    print("   对照 llm-agent/factory.py，一模一样的设计。")
+    print("。")

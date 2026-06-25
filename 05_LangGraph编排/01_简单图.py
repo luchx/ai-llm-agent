@@ -8,7 +8,6 @@
   用 if-else 写会变成一团乱麻。LangGraph 让你用"图"来描述流程：
   每一步是一个"节点"(Node)，步骤之间的跳转是"边"(Edge)。
 
-【对应 llm-agent】
   app/graph/                            ← 基础图定义
   app/agent/identify_answer/workflow.py ← 真实的多步工作流
   app/agent/survey_analysis/           ← 更复杂的 LangGraph 编排
@@ -183,4 +182,4 @@ if __name__ == "__main__":
     print("   节点 = 处理逻辑（函数）")
     print("   边 = 流转规则（条件路由）")
     print("   状态 = 贯穿全图的数据（每个节点都能读写）")
-    print("   对照 llm-agent: identify_answer/workflow.py 就是这个模式")
+    print("")

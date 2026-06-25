@@ -7,9 +7,8 @@
   用 LangGraph 实现一个真实的问卷分析流程：
   预处理 → LLM 分类 → 关键词验证 → 汇总输出
 
-  这个模式对应 llm-agent 里最复杂的 Agent 设计思路。
+  这个模式。
 
-【对应 llm-agent】
   app/agent/identify_answer/workflow.py  ← 问卷回答识别的 LangGraph 工作流
   app/agent/survey_analysis/            ← 满意度分析的 LangGraph 工作流
 
@@ -131,7 +130,7 @@ def decide_next(state: SurveyState) -> Literal["merge_results", "llm_check"]:
     - 关键词已命中 → 直接合并（省 LLM 调用成本）
     - 关键词未命中 → 用 LLM 再检查一遍（可能有关键词覆盖不到的表达）
 
-    对照 llm-agent：这就是"LLM 检测 + 关键词降级"策略的图化版本。
+"LLM 检测 + 关键词降级"策略的图化版本。
     """
     kw = state.get("keyword_result", {})
     if kw.get("categories"):
@@ -146,7 +145,7 @@ def llm_check_node(state: SurveyState) -> dict:
     """
     LLM 检查节点。
     真实项目这里会调大模型 API，这里用更详细的关键词模拟。
-    对照 llm-agent：question_check_agent.py 的 _llm_check 方法
+
     """
     answer = state["cleaned_answer"]
 
@@ -233,4 +232,4 @@ if __name__ == "__main__":
     print("   1. 条件路由：关键词命中就跳过 LLM（省成本）")
     print("   2. 多策略合并：关键词 + LLM 结果取并集（更准确）")
     print("   3. 每步都记录路径（方便调试和监控）")
-    print("   对照 llm-agent/identify_answer/workflow.py，一模一样的设计思路")
+    print("")

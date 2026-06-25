@@ -5,9 +5,8 @@
 
 【这个文件教会你什么】
   当 Agent 有很多工具时，如何管理它们？如何处理多个工具的调用结果？
-  这个模式对应 llm-agent 里 kf_chat_task（AI 客服）的设计思路。
+  这个模式。
 
-【对应 llm-agent】
   app/agent/kf_chat_task/ 里的 AI 客服有十几个子 Agent/工具：
   查工单、查业主信息、查知识库、查房产信息……
   AI 根据用户的问题自己决定调用哪个（或哪几个）。
@@ -214,4 +213,4 @@ if __name__ == "__main__":
     print("   1. AI 可以同时调用多个工具（parallel tool calls）")
     print("   2. 每个工具的结果都要通过 tool role 喂回 AI")
     print("   3. 最后 AI 综合所有结果，组织成自然语言回复")
-    print("   对照 llm-agent/kf_chat_task/，AI 客服就是这个模式的生产级实现。")
+    print("。")

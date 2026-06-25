@@ -7,7 +7,6 @@
   单次调用只能"一问一答"。多轮对话是让 AI 记住之前说过什么，
   这是 AI 客服、聊天机器人的基础。
 
-【对应 llm-agent】
   app/agent/kf_chat_task/ 里的 AI 客服就用到了多轮对话和上下文管理。
   app/agent/kf_chat_task/core/context_manager.py 负责管理对话历史。
 
@@ -114,5 +113,5 @@ if __name__ == "__main__":
     print("\n" + "=" * 55)
     print("✅ 看到没？AI 记住了前面聊的内容。")
     print("   秘密就在于：每次把完整 messages 列表发给模型。")
-    print("   对照 llm-agent: context_manager.py 就是在管理这个列表。")
+    print("。")
     print("=" * 55)

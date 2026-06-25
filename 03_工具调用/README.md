@@ -5,7 +5,7 @@
 
 ## 文件说明
 
-| 文件 | 内容 | 对应 llm-agent |
+| 文件 | 内容 |
 |---|---|---|
 | `01_FunctionCalling.py` | 单工具调用的完整流程 | Agent 的 tool_calls 能力 |
 | `02_多工具Agent.py` | 多工具并行调用 | `app/agent/kf_chat_task/` |

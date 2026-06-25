@@ -14,7 +14,6 @@
   4. 你真的去执行这个函数
   5. 把函数结果再喂回 AI，让它组织成自然语言回复
 
-【对应 llm-agent】
   Agent 的核心能力之一。kf_chat_task 里的 AI 客服就是用 Function Calling
   来调用查工单、查业主信息等工具的。
 
@@ -40,7 +39,6 @@ client = get_client()
 # ========== 第 1 步：定义工具（就是一个普通的 Python 函数）==========
 # 这个函数假装去数据库查工单状态。
 # 真实项目里，这里面会是真正的数据库查询。
-# 对照 llm-agent：各种 Agent 里调用的后端服务函数
 def query_order_status(order_id: str) -> dict:
     """根据工单号查询处理状态"""
     # 假数据，模拟数据库查询结果

@@ -9,7 +9,6 @@
 
   这是工程化的关键设计：业务逻辑和基础设施解耦。
 
-【对应 llm-agent】
   app/llm/service.py       ← LLM Provider 抽象层
   app/llm/myopenai_client.py ← 具体的 OpenAI 兼容客户端
   app/llm/tracker.py       ← Token 追踪
@@ -33,7 +32,6 @@ from dataclasses import dataclass
 
 
 # ========== 第 1 部分：定义统一的返回结构 ==========
-# 对照 llm-agent：app/llm/tracker.py 里的 TokenUsage
 @dataclass
 class LLMResponse:
     """
@@ -51,7 +49,6 @@ class LLMResponse:
 
 
 # ========== 第 2 部分：定义 LLM Provider 接口 ==========
-# 对照 llm-agent：app/llm/service.py 里的 BaseLLMProvider
 class BaseLLMProvider(ABC):
     """
     LLM Provider 抽象基类。
@@ -87,7 +84,7 @@ class BaseLLMProvider(ABC):
 class DoubaoProvider(BaseLLMProvider):
     """
     豆包（字节跳动）Provider。
-    对照 llm-agent：app/llm/myopenai_client.py
+
     """
     def __init__(self, api_key: str, base_url: str, model: str):
         from openai import OpenAI
@@ -158,7 +155,6 @@ class MockProvider(BaseLLMProvider):
 
 
 # ========== 第 4 部分：LLM 工厂 ==========
-# 对照 llm-agent：app/llm/factory.py
 class LLMFactory:
     """
     LLM 工厂：根据配置创建不同的 Provider。
@@ -183,7 +179,6 @@ class LLMFactory:
 
 
 # ========== 第 5 部分：Token 追踪中间件 ==========
-# 对照 llm-agent：app/llm/tracker.py
 class TokenTracker:
     """
     Token 用量追踪器。
@@ -271,5 +266,5 @@ if __name__ == "__main__":
     print("   1. 业务代码只调 provider.chat()，不关心底层模型")
     print("   2. 换模型 = 换 Provider，业务代码零修改")
     print("   3. Token 追踪、成本统计、超时重试统一在 Provider 层处理")
-    print("   对照 llm-agent/app/llm/ 三层设计：")
+    print("")
     print("   service.py（抽象层）→ myopenai_client.py（实现）→ tracker.py（追踪）")

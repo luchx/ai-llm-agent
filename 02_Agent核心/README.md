@@ -5,7 +5,7 @@
 
 ## 文件说明
 
-| 文件 | 内容 | 对应 llm-agent |
+| 文件 | 内容 |
 |---|---|---|
 | `01_BaseAgent.py` | Agent 抽象基类，定义接口 | `app/agent/base_agent.py` |
 | `02_问卷检查Agent.py` | 最简单的 Agent 实现 | `app/agent/question_check_agent.py` |
