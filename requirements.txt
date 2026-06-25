@@ -1,0 +1,15 @@
+# 阶段 1-3（必装）
+openai
+pydantic
+
+# 阶段 4（异步任务平台）
+fastapi
+uvicorn
+
+# 阶段 5（LangGraph 编排）
+langchain
+langgraph
+langchain-openai
+
+# 阶段 6（运行时管理，可选）
+psutil
