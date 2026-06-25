@@ -47,7 +47,7 @@ brew install python@3.13
 ### 2. 创建虚拟环境 + 安装依赖
 
 ```bash
-# 在 AI-Agent学习手册/ 目录下执行
+# 在项目根目录下执行
 python3 -m venv .venv
 source .venv/bin/activate
 
@@ -68,7 +68,7 @@ pip install -r requirements.txt
 source .venv/bin/activate
 
 # 从学习手册根目录运行（这样 config.py 才能被找到）
-cd ~/Desktop/AI-Agent学习手册
+cd /path/to/ai-llm-agent # 替换为你实际的项目目录
 python 01_LLM基础调用/01_最小调用.py
 ```
 
@@ -88,7 +88,6 @@ python 01_LLM基础调用/01_最小调用.py
 - [ ] 阶段 4：有一个能通过 HTTP 提交任务、异步执行、查询结果的最小平台
 - [ ] 阶段 5：能用 LangGraph 串一个多步流程
 - [ ] 阶段 6：理解运行时回收和 LLM 抽象层的设计
-
 
 > Agent 没那么玄，本质就是"调模型 + 解析返回 + 按规则处理"。
 > 你前端天天做的"调接口 + 解析响应 + 渲染页面"，换个皮就是 Agent。
