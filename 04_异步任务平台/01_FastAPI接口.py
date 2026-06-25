@@ -5,7 +5,7 @@
 
 【这个文件教会你什么】
   把之前写的 Agent 变成一个 Web API，让其他系统可以通过 HTTP 调用。
-  这就是 llm-agent 的 API 层。
+  这就是真实项目的 API 层。
 
   app/api/v1/task.py  ← 任务提交和查询接口
   app/main.py         ← FastAPI 应用入口

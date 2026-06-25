@@ -1,14 +1,14 @@
 """
 ================================================================
-阶段 4-2：完整异步任务平台 —— llm-agent 的最小复刻
+阶段 4-2：完整异步任务平台 —— 真实项目的最小复刻
 ================================================================
 
 【这个文件教会你什么】
   这是整个学习手册里最重要的文件之一。
-  它用不到 300 行代码，复刻了 llm-agent 的核心架构：
+  它用不到 300 行代码，复刻了真实项目的核心架构：
   提交任务 → 返回 ID → 后台异步执行 → 轮询查询结果。
 
-  这就是 llm-agent 的"请求-ID 异步模式"。
+  这就是经典的"请求-ID 异步模式"。
 
   app/api/v1/task.py        → 提交接口 + 查询接口
   app/queue/functions.py    → 队列任务函数
@@ -271,7 +271,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="AI Agent 异步任务平台",
-    description="llm-agent 的最小复刻版，展示请求-ID 异步模式",
+    description="真实项目的最小复刻版，展示请求-ID 异步模式",
     lifespan=lifespan,
 )
 
@@ -342,7 +342,7 @@ if __name__ == "__main__":
     print("=" * 60)
     print()
     print("架构：FastAPI + asyncio Queue + Worker")
-    print("对应：llm-agent 的 API → MySQL → Redis/ARQ → Worker 链路")
+    print("对应：生产级项目的 API → MySQL → Redis/ARQ → Worker 链路")
     print()
     print("📖 API 文档：http://localhost:8000/docs")
     print()
